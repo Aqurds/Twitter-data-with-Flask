@@ -34,6 +34,11 @@
           <option value="top_tweets">Top Tweets</option>
           <option value="sentiment">Sentiment</option>
         </select> -->
+        {% if search_topic %}
+          <div class="" style="width:100%; height:100px; text-align:center; font-size:24px; font-weight:bold;">
+            <p style="margin-top:25px;">Search result for {{search_topic}} topic:</p>
+          </div>
+        {% endif %}
 
         {% if result_list %}
         <div class="" style="width:404px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px auto 30px;">

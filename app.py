@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 #from nocache import nocache
-import ast,requests,boto3,os
+import ast, requests, boto3, os
 from datetime import datetime
 import csv
 # import plots,copy,random,string
@@ -9,7 +9,7 @@ import csv
 # session_token = '+dP/EIgDIcZgOUcuzlLHRY9glf+sqJexnhFY6I6s5Vjv6AtT66gUKo4t3PkdkTGtYr/SYI6CBvnEYPOtumiuqdCgHJZLUrYjZx0AsENG9BMgodHcFk8u/cSppfhzjYwWbGKzyBuNiWvpQrpNwVrpO+O+J3ORApG0/jnIv8ibN8oxqLa4QU='
 #
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '0f9dc56d2288afa6e10b8d97577fe25b'
+# app.config['SECRET_KEY'] = '0f9dc56d2288afa6e10b8d97577fe25b'
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 #
 #
@@ -24,11 +24,11 @@ app.config['SECRET_KEY'] = '0f9dc56d2288afa6e10b8d97577fe25b'
 #             "ecig" : (copy.deepcopy(types),copy.deepcopy(types),copy.deepcopy(types)),
 #             "aids" : (copy.deepcopy(types),copy.deepcopy(types),copy.deepcopy(types))}
 #
-# region = 'us-east-2'
+region = 'us-east-2'
 # session = boto3.session.Session()
-# aws_secret = 'aXL3ndaT/'
-# aws_pub = 'AKIAIFL3OJZQZDFSJOQQ'
-# db = boto3.resource('dynamodb',aws_access_key_id=aws_pub,aws_secret_access_key=aws_secret)
+aws_secret = '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'
+aws_pub = 'AKIAIFL3OJZQZDFSJOQQ'
+db = boto3.resource('dynamodb',aws_access_key_id=aws_pub,aws_secret_access_key=aws_secret, region_name=region)
 # img_folder = '/home/trevorm4/mysite/static/img/'
 
 # No caching at all for API endpoints.
@@ -128,31 +128,44 @@ app.config['SECRET_KEY'] = '0f9dc56d2288afa6e10b8d97577fe25b'
 
 @app.route('/', methods=['POST', 'GET'])
 def dash():
-    data_list = []
+
+
+    # with open('AllTweet.csv', encoding="utf8") as f:
+    #     rd = csv.reader(f)
+    #     for row in rd:
+    #         data_list.append(row)
+
+    # Get the full table
+    table = db.Table('AllTweet')
+    # With Scan get the full table data
+    data = table.scan()
+    # get the first item
+    data_One = data['Items']
     result_list = []
     positive = 0
     negative = 0
     neutral =0
-    with open('AllTweet.csv', encoding="utf8") as f:
-        rd = csv.reader(f)
-        for row in rd:
-            data_list.append(row)
+
 
     search_topic = ''
     if request.method == 'POST':
         search_topic = request.form['topic']
 
-        for item in data_list:
-            if item[14] == search_topic:
+        for item in data_One:
+            if item['topic'] == search_topic:
                 result_list.append(item)
     for item in result_list:
-        if item[11] == "Neutral":
+        if item['sentiment'] == "Neutral":
             neutral += 1
-        if item[11] == "Negative":
+        if item['sentiment'] == "Negative":
             negative += 1
-        if item[11] == "Positive":
+        if item['sentiment'] == "Positive":
             positive += 1
-    return render_template('dashboard.html', result_list=result_list, positive=positive, negative=negative, neutral=neutral)
+    return render_template('dashboard.html', result_list=result_list, positive=positive, negative=negative, neutral=neutral, search_topic=search_topic)
+
+
+
+
 
 
 @app.route('/analyze')
@@ -167,7 +180,19 @@ def about():
 
 @app.route('/graph/')
 def graph():
-    return render_template('graph.html')
+
+    table = db.Table('AllTweet')
+    tabdata = table.creation_date_time
+    # num_of_item = table.item_count
+    data = table.scan()
+    data_One = data['Items']
+    result_list = []
+
+    for item in data_One:
+        if item['topic'] == 'weed':
+            result_list.append(item)
+    num_of_item = len(result_list)
+    return render_template('graph.html', tabdata=tabdata, num_of_item=num_of_item, table=data_One)
 
 
 
