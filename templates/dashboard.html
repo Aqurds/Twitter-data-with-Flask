@@ -36,18 +36,48 @@
         </select> -->
         {% if search_topic %}
           <div class="" style="width:100%; height:100px; text-align:center; font-size:24px; font-weight:bold;">
-            <p style="margin-top:25px;">Search result for {{search_topic}} topic:</p>
+            <p style="margin-top:25px;"> {{unique_day_list}} Search result for {{search_topic}} topic:</p>
           </div>
         {% endif %}
 
-        {% if result_list %}
-        <div class="" style="width:404px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px auto 30px;">
-          <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
-            <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">topic polarity</p>
-          </div>
-          <div id="chartContainer" style="height: 225px; width: 390px;"></div>
+
+
+
+
+        <!-- Wrapper div for full plot -->
+        <div class="" style="width:1400px; height:auto; margin:0 auto; overflow:hidden;">
+
+              <!-- polarity percentage graph -->
+              {% if result_list %}
+              <div class="" style="width:395px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px 0px; float:left;">
+                <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
+                  <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">topic polarity</p>
+                </div>
+                <div id="chartContainer" style="height: 225px; width: 390px;"></div>
+              </div>
+              {% endif %}
+
+              <!-- url support graph -->
+              {% if result_list %}
+              <div class="" style="width:395px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px 0px; float:left;">
+                <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
+                  <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">URL support</p>
+                </div>
+                <div id="urlsupport" style="height: 225px; width: 390px;"></div>
+              </div>
+              {% endif %}
+
+              <!-- time series graph -->
+              {% if result_list %}
+              <div class="" style="width:600px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px 0px; float:left;">
+                <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
+                  <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">Tweets over time</p>
+                </div>
+                <div id="timechart" style="height: 225px; width: 590px;"></div>
+              </div>
+              {% endif %}
+
         </div>
-        {% endif %}
 
         <div class="" style="width:100%; height:100px; text-align:center;">
           <form action="{{url_for('dash')}}" method="POST" style="position:relative;">

@@ -141,19 +141,24 @@ def dash():
     data = table.scan()
     # get the first item
     data_One = data['Items']
+
+    # initialize the varialbe outside of loop to avoid error when the app loads without any result or first time when the app loads, there will be no result
     result_list = []
     positive = 0
     negative = 0
     neutral =0
 
-
+    # get the search topic
     search_topic = ''
     if request.method == 'POST':
         search_topic = request.form['topic']
 
-        for item in data_One:
-            if item['topic'] == search_topic:
-                result_list.append(item)
+    for item in data_One:
+        if item['topic'] == search_topic:
+            result_list.append(item)
+    # ===================================================
+    # calculate the neautral, negative, positive number
+    # ================================================
     for item in result_list:
         if item['sentiment'] == "Neutral":
             neutral += 1
@@ -161,7 +166,68 @@ def dash():
             negative += 1
         if item['sentiment'] == "Positive":
             positive += 1
-    return render_template('dashboard.html', result_list=result_list, positive=positive, negative=negative, neutral=neutral, search_topic=search_topic)
+
+
+
+
+    # ==================================================
+    # calculate the number of topic happended each day
+    # =================================================
+    all_day_list = []
+    unique_day_list = []
+    for item in result_list:
+        all_day_list.append(item['created_at'].split()[0].split('-')[-1])
+    for item in all_day_list:
+        if item not in unique_day_list:
+            unique_day_list.append(item)
+
+    each_day_topic_list = []
+    day_first = 0
+    day_second = 0
+    for item in result_list:
+        if item['created_at'].split()[0].split('-')[-1] == unique_day_list[0]:
+            day_first += 1
+
+    if day_first != len(result_list):
+        day_second = len(result_list) - day_first
+
+
+    # ===============================================================================
+    # getting url support number for each search topic from URLsTable table from aws
+    # =============================================================================
+    # Get the full table
+    url_table = db.Table('URLsTable')
+    # With Scan get the full table data
+    url_data = url_table.scan()
+    # get the first item
+    url_data_One = data['Items']
+
+    total_url_for_search_topic = []
+    url_supported_link = 0
+    url_non_supported_link = 0
+
+    # getting all urls for search topic
+    for item in url_data_One:
+        if item['topic'] == search_topic:
+            for key, val in item.items():
+                try:
+                    if "/" in val:
+                        total_url_for_search_topic.append(val)
+                except:
+                    pass
+
+    # getting total url number which contain the serach topic word
+    for item in total_url_for_search_topic:
+        if search_topic in item:
+            url_supported_link += 1
+
+    # getting non_supported_url number
+    url_non_supported_link = len(total_url_for_search_topic) - url_supported_link
+
+
+    # Calculating
+
+    return render_template('dashboard.html', result_list=result_list, positive=positive, negative=negative, neutral=neutral, search_topic=search_topic, unique_day_list=unique_day_list, url_supported_link=url_supported_link, url_non_supported_link=url_non_supported_link, day_first=day_first, day_second=day_second)
 
 
 
@@ -181,29 +247,34 @@ def about():
 @app.route('/graph/')
 def graph():
 
-    table = db.Table('AllTweet')
-    tabdata = table.creation_date_time
-    # num_of_item = table.item_count
+    # table = db.Table('AllTweet')
+    # tabdata = table.creation_date_time
+    # # num_of_item = table.item_count
+    # data = table.scan()
+    # data_One = data['Items']
+    # result_list = []
+    # topic_list = []
+    # unique_topic_list = []
+    # created_at_column_data = []
+    #
+    #
+    # for item in data_One:
+    #     # if item['topic'] == 'weed':
+    #     #     result_list.append(item)
+    #     topic_list.append(item['topic'])
+    #     created_at_column_data.append(item['created_at'])
+    #
+    # # getting the unique topic list
+    # for item in topic_list:
+    #     if item not in unique_topic_list:
+    #         unique_topic_list.append(item)
+
+    table = db.Table('URLsTable')
     data = table.scan()
     data_One = data['Items']
-    result_list = []
-    topic_list = []
-    unique_topic_list = []
 
-
-    for item in data_One:
-        # if item['topic'] == 'weed':
-        #     result_list.append(item)
-        topic_list.append(item['topic'])
-
-    # getting the unique topic list
-    for item in topic_list:
-        if item not in unique_topic_list:
-            unique_topic_list.append(item)
-
-            
-    num_of_item = len(result_list)
-    return render_template('graph.html', tabdata=tabdata, num_of_item=num_of_item, table=unique_topic_list)
+    # num_of_item = len(result_list)
+    return render_template('graph.html', data_One=data_One)
 
 
 
