@@ -187,12 +187,23 @@ def graph():
     data = table.scan()
     data_One = data['Items']
     result_list = []
+    topic_list = []
+    unique_topic_list = []
+
 
     for item in data_One:
-        if item['topic'] == 'weed':
-            result_list.append(item)
+        # if item['topic'] == 'weed':
+        #     result_list.append(item)
+        topic_list.append(item['topic'])
+
+    # getting the unique topic list
+    for item in topic_list:
+        if item not in unique_topic_list:
+            unique_topic_list.append(item)
+
+            
     num_of_item = len(result_list)
-    return render_template('graph.html', tabdata=tabdata, num_of_item=num_of_item, table=data_One)
+    return render_template('graph.html', tabdata=tabdata, num_of_item=num_of_item, table=unique_topic_list)
 
 
 
