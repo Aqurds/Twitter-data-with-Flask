@@ -276,9 +276,22 @@
     {% block main %}  {% endblock %}
 
 
+
+
     <!-- Bootstrap core JavaScript -->
     <script src="{{url_for('static', filename = 'vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{url_for('static', filename = 'vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+
+    {% if result_list %}
+      <script type="text/javascript">
+        $(document).ready(function(){
+              var offset = $("#jq_get_id").offset();
+              var top_offset = offset.top
+              $('html,body').animate({scrollTop: top_offset }, 2000);
+            });
+      </script>
+    {% endif %}
 
     <!-- Custom scripts for this template -->
     <script src="{{url_for('static', filename = 'js/clean-blog.min.js')}}"></script>
