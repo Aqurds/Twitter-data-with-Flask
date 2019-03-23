@@ -172,7 +172,7 @@ def dash():
 
     # ==================================================
     # calculate the number of topic happended each day
-    # =================================================
+    # ===============================================
     all_day_list = []
     unique_day_list = []
     for item in result_list:
@@ -192,7 +192,7 @@ def dash():
         day_second = len(result_list) - day_first
 
 
-    # ===============================================================================
+    # ================================================================================
     # getting url support number for each search topic from URLsTable table from aws
     # =============================================================================
     # Get the full table
@@ -227,7 +227,7 @@ def dash():
 
     # =================================================
     # Calculating total unique account for each topic
-    # ===============================================
+    # ==============================================
     all_account_list = []
     unique_account_list = []
     total_account = 0
@@ -243,9 +243,9 @@ def dash():
 
 
 
-    # =================================================
+    # ==============================================
     # Calculating total BOT account for each topic
-    # ===============================================
+    # ===========================================
     total_bot_account = 0
     for item in result_list:
         if item['user_type'] == 'Bot':
@@ -253,9 +253,9 @@ def dash():
 
 
 
-    # =================================================
+    # ==============================================
     # Calculating % of true account for each topic
-    # ===============================================
+    # ===========================================
     true_account_percentage_full_decimal = 0
     true_account_percentage = 0
     if result_list:
@@ -264,7 +264,7 @@ def dash():
 
 
 
-    # ==============================================================
+    # ===============================================================
     # Calculating url & non-url for each sentiment for Search topic
     # ===========================================================
     negative_result_list = []
