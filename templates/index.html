@@ -22,7 +22,18 @@
     <link href="{{url_for('static', filename = 'css/clean-blog.min.css')}}" rel="stylesheet">
     <style media="screen">
       .canvasjs-chart-credit{
-        display:none;
+        display:none !important;
+      }
+
+      .highcharts-button-symbol{
+        display:none !important;
+      }
+
+      ..highcharts-button-symbol:hover{
+        display:none !important;
+      }
+      .highcharts-credits{
+        display:none !important;
       }
     </style>
     <script>
@@ -35,18 +46,12 @@
     		text: "",
     		horizontalAlign: "center"
     	},
-      // width:300,
-      // height:400,
     	data: [{
     		type: "doughnut",
     		startAngle: 60,
     		// innerRadius: 60,
     		indexLabelFontSize: 12,
     		indexLabel: "{label} - #percent%",
-        // indexLabelLineColor: "white",
-        // indexLabelPlacement: "inside",
-        // indexLabelBackgroundColor: "white",
-        // indexLabelFontColor: "black",
     		toolTipContent: "<b>{label}:</b> {y} (#percent%)",
     		dataPoints: [
     			{ y: {{positive}}, label: "Positive" },
@@ -65,18 +70,12 @@
     		text: "",
     		horizontalAlign: "center"
     	},
-      // width:300,
-      // height:400,
     	data: [{
     		type: "doughnut",
     		startAngle: 60,
     		// innerRadius: 60,
     		indexLabelFontSize: 12,
     		indexLabel: "{label} - #percent%",
-        // indexLabelLineColor: "white",
-        // indexLabelPlacement: "inside",
-        // indexLabelBackgroundColor: "white",
-        // indexLabelFontColor: "black",
     		toolTipContent: "<b>{label}:</b> {y} (#percent%)",
     		dataPoints: [
     			{ y: {{url_supported_link}}, label: "URL" },
@@ -88,44 +87,13 @@
 
 
     // time series line chart js
-
-
     var time_series_line_chart = new CanvasJS.Chart("timechart", {
     	title:{
     		text: ""
     	},
-    	// axisY:[{
-    	// 	title: "Order",
-    	// 	lineColor: "#C24642",
-    	// 	tickColor: "#C24642",
-    	// 	labelFontColor: "#C24642",
-    	// 	titleFontColor: "#C24642",
-    	// 	suffix: "k"
-    	// },
-    	// {
-    	// 	title: "Footfall",
-    	// 	lineColor: "#369EAD",
-    	// 	tickColor: "#369EAD",
-    	// 	labelFontColor: "#369EAD",
-    	// 	titleFontColor: "#369EAD",
-    	// 	suffix: "k"
-    	// }],
-    	// axisY2: {
-    	// 	title: "Revenue",
-    	// 	lineColor: "#7F6084",
-    	// 	tickColor: "#7F6084",
-    	// 	labelFontColor: "#7F6084",
-    	// 	titleFontColor: "#7F6084",
-    	// 	prefix: "$",
-    	// 	suffix: "k"
-    	// },
     	toolTip: {
     		shared: true
     	},
-    	// legend: {
-    	// 	cursor: "pointer",
-    	// 	itemclick: toggleDataSeries
-    	// },
     	data: [{
     		type: "line",
     		name: "{{search_topic}}",
@@ -143,22 +111,61 @@
     			{ x: new Date(2019, 03, 24), y: 0 },
     			{ x: new Date(2019, 03, 25), y: 0 },
     			{ x: new Date(2019, 03, 26), y: 0 },
-    			{ x: new Date(2019, 03, 27), y: 0 },
-    			{ x: new Date(2019, 03, 28), y: 0 }
+    			{ x: new Date(2019, 03, 27), y: 0 }
     		]
     	}
     	]
     });
     time_series_line_chart.render();
-    // function toggleDataSeries(e) {
-    // 	if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-    // 		e.dataSeries.visible = false;
-    // 	} else {
-    // 		e.dataSeries.visible = true;
-    // 	}
-    // 	e.time_series_line_chart.render();
-    // }
 
+
+
+    // polarity & support chart js
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: ['Negative', 'Neutral', 'Positive']
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            },
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                }
+            }
+        },
+        series: [{
+            name: 'No URL',
+            data: [5, 3, 4]
+        }, {
+            name: 'URL',
+            data: [2, 2, 3]
+        }]
+    });
 
     }
     </script>
@@ -209,6 +216,9 @@
     <!-- Custom scripts for this template -->
     <script src="{{url_for('static', filename = 'js/clean-blog.min.js')}}"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 
   </body>

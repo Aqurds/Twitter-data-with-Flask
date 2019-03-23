@@ -36,7 +36,7 @@
         </select> -->
         {% if search_topic %}
           <div class="" style="width:100%; height:100px; text-align:center; font-size:24px; font-weight:bold;">
-            <p style="margin-top:25px;"> {{unique_day_list}} Search result for {{search_topic}} topic:</p>
+            <p style="margin-top:25px;">Search result for {{search_topic}} topic:</p>
           </div>
         {% endif %}
 
@@ -78,6 +78,40 @@
               {% endif %}
 
         </div>
+
+
+
+
+        <!-- Wrapper div for full plot -->
+        <div class="" style="width:1400px; height:auto; margin:0 auto; overflow:hidden;">
+
+              <!-- polarity & support graph -->
+              {% if result_list %}
+              <div class="" style="width:600px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px 0px; float:left;">
+                <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
+                  <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">Polarity and support</p>
+                </div>
+                <div id="container" style="min-width: 310px; height: 227px; margin: 0 auto"></div>
+              </div>
+              {% endif %}
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <div class="" style="width:100%; height:100px; text-align:center;">
           <form action="{{url_for('dash')}}" method="POST" style="position:relative;">
@@ -126,6 +160,9 @@
     <!-- Custom scripts for this template -->
     <script src="{{url_for('static', filename = 'js/clean-blog.min.js')}}"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
   </body>
 
