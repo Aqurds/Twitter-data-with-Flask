@@ -44,14 +44,92 @@
 
 
 
-        <!-- Wrapper div for full plot -->
-        <div class="" style="width:1400px; height:auto; margin:0 auto; overflow:hidden;">
 
+
+        <!-- Heading wrapper div for plots -->
+        <div class="" style="width:1400px; height:auto; margin:0 auto; overflow:hidden;">
+              <!-- Dashboard header -->
+              {% if result_list %}
+              <div class="" style="width:100%; height:53px; border:2px solid #0e3e32; padding:0px; display:block; margin:10px 0px; float:left;">
+                <div class="" style="width:100%; height:50px; background-color: rgba(24,103,83, 0.3); line-height:50px; border-right:1px solid rgba(24,103,83, 0.6); border-bottom:1px solid rgba(24,103,83, 0.6); text-align:center;">
+                  <p style="margin:0px; text-transform:uppcercase; font-weight:bold; font-size:26px; color:#0e3e32; line-height:50px;">Topic analysis dashboard</p>
+                </div>
+              </div>
+              {% endif %}
+        </div>
+
+
+
+        <!-- First wrapper div for plots -->
+        <div class="" style="width:1400px; height:auto; margin:0 auto; overflow:hidden;">
+              <!-- statistics calculation show plot -->
+              {% if result_list %}
+              <div class="" style="width:100%; height:80px; border:2px solid #0e3e32; padding:0px; display:block; margin:10px 0px; float:left;">
+
+                <div class="" style="width:14.5%; height:100%; padding:0px; float:left; text-align:center">
+                  <div class="" style="width:100%; height:50px; background-color: rgba(24,103,83, 0.3); line-height:50px; border-right:1px solid rgba(24,103,83, 0.6); border-bottom:1px solid rgba(24,103,83, 0.6);">
+                    <p style="margin:0px; text-transform:uppcercase; font-weight:bold; font-size:22px; color:#186753; line-height:50px;">{{  result_list | length }}</p>
+                  </div>
+                  <p style="text-align:center; line-height:24px; margin:0px; font-size:13px; color: rgba(24,103,83, 0.4);">Topics</p>
+                </div>
+
+                <div class="" style="width:14%; height:100%; padding:0px; float:left; text-align:center">
+                  <div class="" style="width:100%; height:50px; background-color: rgba(24,103,83, 0.3); line-height:50px;border-right:1px solid rgba(24,103,83, 0.6); border-bottom:1px solid rgba(24,103,83, 0.6);">
+                    <p style="margin:0px; text-transform:uppcercase; font-weight:bold; font-size:22px; color:#186753; line-height:50px;">{{ total_account }}</p>
+                  </div>
+                  <p style="text-align:center; line-height:24px; margin:0px; font-size:13px; color: rgba(24,103,83, 0.4);">Account</p>
+                </div>
+
+                <div class="" style="width:14%; height:100%; padding:0px; float:left; text-align:center">
+                  <div class="" style="width:100%; height:50px; background-color: rgba(24,103,83, 0.3); line-height:50px;border-right:1px solid rgba(24,103,83, 0.6); border-bottom:1px solid rgba(24,103,83, 0.6);">
+                    <p style="margin:0px; text-transform:uppcercase; font-weight:bold; font-size:22px; color:#186753; line-height:50px;">{{topics_per_account}}</p>
+                  </div>
+                  <p style="text-align:center; line-height:24px; margin:0px; font-size:13px; color: rgba(24,103,83, 0.4);">Topics per account</p>
+                </div>
+
+                <div class="" style="width:14%; height:100%; padding:0px; float:left; text-align:center">
+                  <div class="" style="width:100%; height:50px; background-color: rgba(24,103,83, 0.3); line-height:50px;border-right:1px solid rgba(24,103,83, 0.6); border-bottom:1px solid rgba(24,103,83, 0.6);">
+                    <p style="margin:0px; text-transform:uppcercase; font-weight:bold; font-size:22px; color:#186753; line-height:50px;">{{ total_bot_account }}</p>
+                  </div>
+                  <p style="text-align:center; line-height:24px; margin:0px; font-size:13px; color: rgba(24,103,83, 0.4);">Bot account</p>
+                </div>
+
+                <div class="" style="width:14.5%; height:100%; padding:0px; float:left; text-align:center">
+                  <div class="" style="width:100%; height:50px; background-color: rgba(24,103,83, 0.3); line-height:50px;border-right:1px solid rgba(24,103,83, 0.6); border-bottom:1px solid rgba(24,103,83, 0.6);">
+                    <p style="margin:0px; text-transform:uppcercase; font-weight:bold; font-size:22px; color:#186753; line-height:50px;">{{ true_account_percentage }} %</p>
+                  </div>
+                  <p style="text-align:center; line-height:24px; margin:0px; font-size:13px; color: rgba(24,103,83, 0.4);">% off true accounts</p>
+                </div>
+
+                <div class="" style="width:14.5%; height:100%; padding:0px; float:left; text-align:center">
+                  <div class="" style="width:100%; height:50px; background-color: rgba(24,103,83, 0.3); line-height:50px;border-right:1px solid rgba(24,103,83, 0.6); border-bottom:1px solid rgba(24,103,83, 0.6);">
+                    <p style="margin:0px; text-transform:uppcercase; font-weight:bold; font-size:22px; color:#186753; line-height:50px;">--</p>
+                  </div>
+                  <p style="text-align:center; line-height:24px; margin:0px; font-size:13px; color: rgba(24,103,83, 0.4);">Topics with url</p>
+                </div>
+
+                <div class="" style="width:14.5%; height:100%; padding:0px; float:left; text-align:center">
+                  <div class="" style="width:100%; height:50px; background-color: rgba(24,103,83, 0.3); line-height:50px;border-bottom:1px solid rgba(24,103,83, 0.6);">
+                    <p style="margin:0px; text-transform:uppcercase; font-weight:bold; font-size:22px; color:#186753; line-height:50px;">--</p>
+                  </div>
+                  <p style="text-align:center; line-height:24px; margin:0px; font-size:13px; color: rgba(24,103,83, 0.4);">% URL support</p>
+                </div>
+
+
+              </div>
+              {% endif %}
+        </div>
+
+
+
+
+        <!--  Second wrapper div for plots -->
+        <div class="" style="width:1400px; height:auto; margin:0 auto; overflow:hidden;">
               <!-- polarity percentage graph -->
               {% if result_list %}
-              <div class="" style="width:395px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px 0px; float:left;">
-                <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
-                  <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">topic polarity</p>
+              <div class="" style="width:395px; height:255px; border:2px solid #0e3e32; padding:0px; display:block; margin:10px 0px; float:left;">
+                <div class="" style="width:100%; height:24px; border-bottom:2px solid #0e3e32; padding:0px;">
+                  <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">Topic polarity</p>
                 </div>
                 <div id="chartContainer" style="height: 225px; width: 390px;"></div>
               </div>
@@ -59,8 +137,8 @@
 
               <!-- url support graph -->
               {% if result_list %}
-              <div class="" style="width:395px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px 0px; float:left;">
-                <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
+              <div class="" style="width:395px; height:255px; border:2px solid #0e3e32; padding:0px; display:block; margin:10px 0px; float:left; border-left:0px; border-right:0px;">
+                <div class="" style="width:100%; height:24px; border-bottom:2px solid #0e3e32; padding:0px;">
                   <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">URL support</p>
                 </div>
                 <div id="urlsupport" style="height: 225px; width: 390px;"></div>
@@ -69,26 +147,27 @@
 
               <!-- time series graph -->
               {% if result_list %}
-              <div class="" style="width:600px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px 0px; float:left;">
-                <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
+              <div class="" style="width:610px; height:255px; border:2px solid #0e3e32; padding:0px; display:block; margin:10px 0px; float:left; position:relative;">
+                <div class="" style="width:100%; height:24px; border-bottom:2px solid #0e3e32; padding:0px;">
                   <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">Tweets over time</p>
                 </div>
                 <div id="timechart" style="height: 225px; width: 590px;"></div>
+                <div class="" style="position:absolute; left:1px; bottom:1px; with 58px; height:17px; background:#ffffff;">
+
+                </div>
               </div>
               {% endif %}
-
         </div>
 
 
 
 
-        <!-- Wrapper div for full plot -->
+        <!-- Third wrapper div for plots -->
         <div class="" style="width:1400px; height:auto; margin:0 auto; overflow:hidden;">
-
               <!-- polarity & support graph -->
               {% if result_list %}
-              <div class="" style="width:600px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px 0px; float:left;">
-                <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
+              <div class="" style="width:600px; height:255px; border:2px solid #0e3e32; padding:0px; display:block; margin:10px 0px; float:left;">
+                <div class="" style="width:100%; height:24px; border-bottom:2px solid #0e3e32; padding:0px;">
                   <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">Polarity and support</p>
                 </div>
                 <div id="container" style="min-width: 310px; height: 227px; margin: 0 auto"></div>
@@ -97,14 +176,32 @@
 
               <!-- used domains graph -->
               {% if result_list %}
-              <div class="" style="width:800px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px 0px; float:left;">
-                <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
+              <div class="" style="width:800px; height:255px; border:2px solid #0e3e32; padding:0px; display:block; margin:10px 0px; float:left; border-left:0px;">
+                <div class="" style="width:100%; height:24px; border-bottom:2px solid #0e3e32; padding:0px;">
                   <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">Used Domains</p>
                 </div>
                 <div id="used_domain_chart" style="min-width: 300px; height: 227px; margin: 0 auto"></div>
               </div>
               {% endif %}
+        </div>
 
+
+
+
+
+        <!-- Fourth wrapper div for plots -->
+        <div class="" style="width:1400px; height:auto; margin:0 auto; overflow:hidden;">
+              <!-- word cloud plot -->
+              {% if result_list %}
+              <div class="" style="width:100%; height:255px; border:2px solid #0e3e32; padding:0px; display:block; margin:10px 0px; float:left;">
+                <div class="" style="width:100%; height:24px; border-bottom:2px solid #0e3e32; padding:0px;">
+                  <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">Word Cloud</p>
+                </div>
+                  <div style="min-width: 100%; height: 227px; margin: 0 auto; text-align:center; font-weight:bold; font-size:22px;">
+                    <p style="line-height:190px;"><span style="color:tomato;">Word</span> <span style="color:green;">cloud</span></p>
+                  </div>
+              </div>
+              {% endif %}
         </div>
 
 

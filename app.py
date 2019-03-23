@@ -225,9 +225,120 @@ def dash():
     url_non_supported_link = len(total_url_for_search_topic) - url_supported_link
 
 
-    # Calculating
+    # =================================================
+    # Calculating total unique account for each topic
+    # ===============================================
+    all_account_list = []
+    unique_account_list = []
+    total_account = 0
+    topics_per_account = 0
+    for item in result_list:
+        all_account_list.append(item['username'])
+    for item in all_account_list:
+        if item not in unique_account_list:
+            unique_account_list.append(item)
+    total_account = len(unique_account_list)
+    if result_list:
+        topics_per_account = round((len(result_list) / total_account), 2)
 
-    return render_template('dashboard.html', result_list=result_list, positive=positive, negative=negative, neutral=neutral, search_topic=search_topic, unique_day_list=unique_day_list, url_supported_link=url_supported_link, url_non_supported_link=url_non_supported_link, day_first=day_first, day_second=day_second)
+
+
+    # =================================================
+    # Calculating total BOT account for each topic
+    # ===============================================
+    total_bot_account = 0
+    for item in result_list:
+        if item['user_type'] == 'Bot':
+            total_bot_account += 1
+
+
+
+    # =================================================
+    # Calculating % of true account for each topic
+    # ===============================================
+    true_account_percentage_full_decimal = 0
+    true_account_percentage = 0
+    if result_list:
+        true_account_percentage_full_decimal = 100 - ((total_bot_account * 100) / len(result_list))
+        true_account_percentage = round(true_account_percentage_full_decimal, 2)
+
+
+
+    # ==============================================================
+    # Calculating url & non-url for each sentiment for Search topic
+    # ===========================================================
+    negative_result_list = []
+    positive_result_list = []
+    neutral_result_list = []
+    if result_list:
+        for item in result_list:
+            if item['sentiment'] == "Negative":
+                negative_result_list.append(item['TweetID'])
+            if item['sentiment'] == "Positive":
+                positive_result_list.append(item['TweetID'])
+            if item['sentiment'] == "Neutral":
+                neutral_result_list.append(item['TweetID'])
+    negative_url_result_list = []
+    positive_url_result_list = []
+    neutral_url_result_list = []
+
+    negative_with_url = 0
+    negative_with_out_url = 0
+    positive_with_url = 0
+    positive_with_out_url = 0
+    neutral_with_url = 0
+    neutral_with_out_url = 0
+
+
+
+    for item in negative_result_list:
+        for id in url_data_One:
+            if item == id['TweetID']:
+                negative_url_result_list.append(id)
+
+    for item in positive_result_list:
+        for id in url_data_One:
+            if item == id['TweetID']:
+                positive_url_result_list.append(id)
+
+    for item in neutral_result_list:
+        for id in url_data_One:
+            if item == id['TweetID']:
+                neutral_url_result_list.append(id)
+
+    if search_topic:
+        for item in negative_url_result_list:
+            for key, val in item.items():
+                try:
+                    if "/" in val:
+                        if search_topic in val:
+                            negative_with_url += 1
+                except:
+                    pass
+        negative_with_out_url = len(negative_url_result_list) - negative_with_url
+
+        for item in positive_url_result_list:
+            for key, val in item.items():
+                try:
+                    if "/" in val:
+                        if search_topic in val:
+                            positive_with_url += 1
+                except:
+                    pass
+        positive_with_out_url = len(positive_url_result_list) - positive_with_url
+
+        for item in neutral_url_result_list:
+            for key, val in item.items():
+                try:
+                    if "/" in val:
+                        if search_topic in val:
+                            neutral_with_url += 1
+                except:
+                    pass
+        neutral_with_out_url = len(neutral_url_result_list) - neutral_with_url
+
+
+    return render_template('dashboard.html', result_list=result_list, positive=positive, negative=negative, neutral=neutral, search_topic=search_topic, unique_day_list=unique_day_list, url_supported_link=url_supported_link, url_non_supported_link=url_non_supported_link, day_first=day_first, day_second=day_second, total_account=total_account, topics_per_account=topics_per_account, total_bot_account=total_bot_account, true_account_percentage=true_account_percentage, negative_with_url=negative_with_url, negative_with_out_url=negative_with_out_url, positive_with_url=positive_with_url, positive_with_out_url=positive_with_out_url, neutral_with_url=neutral_with_url, neutral_with_out_url=neutral_with_out_url)
 
 
 

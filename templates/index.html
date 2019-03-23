@@ -35,6 +35,9 @@
       .highcharts-credits{
         display:none !important;
       }
+      .highcharts-button-box{
+        display:none !important;
+      }
     </style>
     <script>
     window.onload = function () {
@@ -160,10 +163,10 @@
         },
         series: [{
             name: 'No URL',
-            data: [5, 3, 4]
+            data: [{{negative_with_out_url}}, {{neutral_with_out_url}}, {{positive_with_out_url}}]
         }, {
             name: 'URL',
-            data: [2, 2, 3]
+            data: [{{negative_with_url}}, {{neutral_with_url}}, {{positive_with_url}}]
         }]
     });
 
