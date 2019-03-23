@@ -147,7 +147,7 @@
 
         tooltip: {
             headerFormat: '<b>{point.x}</b><br/>',
-            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+            pointFormat: '{series.name}: {point.y}'
         },
         plotOptions: {
             column: {
@@ -164,6 +164,70 @@
         }, {
             name: 'URL',
             data: [2, 2, 3]
+        }]
+    });
+
+
+
+    // Used Domain chart js
+    Highcharts.chart('used_domain_chart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '10px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Used Domains: <b>{point.y:.1f}</b>'
+        },
+        series: [{
+            name: 'Population',
+            data: [
+                ['Domain_1', 140],
+                ['Domain_2', 138],
+                ['Domain_3', 122],
+                ['Domain_4', 127],
+                ['Domain_5', 113],
+                ['Domain_6', 137],
+                ['Domain_7', 117],
+                ['Domain_8', 123],
+                ['Domain_9', 128],
+                ['Domain_10', 138]
+            ],
+            dataLabels: {
+                enabled: true,
+                rotation: 0,
+                color: '#000000',
+                align: 'center',
+                format: '{point.y:.1f}', // one decimal
+                y: -20, // 10 pixels down from the top
+                style: {
+                    fontSize: '10px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
         }]
     });
 
